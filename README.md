@@ -42,3 +42,4 @@ Add the following line:
 ```cron
 0 * * * * /bin/bash /path/to/push-to-github.sh >> /home/user/git-autosave.log 2>&1
 ```
+Don't forget to change "/path/to/push-to-github.sh" with your path.
