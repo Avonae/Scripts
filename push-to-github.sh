@@ -20,7 +20,7 @@ git add -A
 
 # If there are staged changes, commit and push
 if ! git diff --cached --quiet; then
-    git commit -S -m "Autosave: $(date '+%d-%m-%Y %H:%M:%S')"
+    git commit -S -m "Autosync: $(date '+%d-%m-%Y %H:%M:%S')"
     git pull --rebase origin main
     git push origin main
 else
