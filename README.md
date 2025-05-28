@@ -1,4 +1,4 @@
-# Git Autosave Script
+# Git Autopush Script
 
 This script automatically commits and pushes changes from a local Git repository (e.g., a folder synced via Syncthing) to GitHub. It’s useful for versioning notes, documents, or any files that change frequently without manual Git usage.
 
@@ -42,3 +42,4 @@ Add the following line:
 ```cron
 0 * * * * /bin/bash /path/to/push-to-github.sh >> /home/user/git-autosave.log 2>&1
 ```
+Don't forget to change "/path/to/push-to-github.sh" with your path.
