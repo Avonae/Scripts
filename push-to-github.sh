@@ -24,5 +24,5 @@ if ! git diff --cached --quiet; then
     git pull --rebase origin main
     git push origin main
 else
-    echo "No changes to commit ($(date '+%d.%m.%Y %H:%M'))"
+    echo "$(date '+%d.%m.%Y %H:%M') no changes to commit"
 fi
