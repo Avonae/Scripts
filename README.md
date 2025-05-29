@@ -18,7 +18,7 @@ git clone https://github.com/Avonae/Scripts.git "$HOME/Scripts"
 Create `.env` file in the same directory as the script:
 
 ```env
-REPO_PATH="$HOME/Scripts/"
+echo 'REPO_PATH="$HOME/Scripts/"' > ~/Scripts/.env
 ```
 
 Make the script executable:
@@ -27,10 +27,10 @@ Make the script executable:
 chmod +x ~/Scripts/push-to-github.sh
 ```
 
-### 3. Run it manually:
+### 3. Run it manually
 
 ```bash
-./Scripts/push-to-github.sh
+~/Scripts/push-to-github.sh
 ```
 
 ### 4. (Optional) Automate with cron
@@ -44,5 +44,5 @@ crontab -e
 Add the following line:
 
 ```cron
-0 * * * * /bin/bash "$HOME/git-autosave/push-to-github.sh" >> "$HOME/git-autosave.log" 2>&1
+0 * * * * /bin/bash "$HOME/Scripts/push-to-github.sh" >> "$HOME/Scripts/logs/git-autosave.log" 2>&1
 ```
