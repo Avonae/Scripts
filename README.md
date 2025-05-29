@@ -10,23 +10,27 @@ This script automatically commits and pushes changes from a local Git repository
 - Rebases from the remote `origin/main` branch and pushes the result to GitHub
 
 ## How to use
-
-### 1. Create `.env` file in the same directory as the script:
-
-```env
-REPO_PATH=/home/user/syncthing/Obsidian-vault
+### Clone repo
+```bash
+git clone https://github.com/Avonae/Scripts.git "$HOME/Scripts"
 ```
 
-### 2. Make the script executable:
+Create `.env` file in the same directory as the script:
+
+```env
+REPO_PATH="$HOME/Scripts/"
+```
+
+Make the script executable:
 
 ```bash
-chmod +x push-to-github.sh
+chmod +x ~/Scripts/push-to-github.sh
 ```
 
 ### 3. Run it manually:
 
 ```bash
-./push-to-github.sh
+./Scripts/push-to-github.sh
 ```
 
 ### 4. (Optional) Automate with cron
@@ -42,4 +46,3 @@ Add the following line:
 ```cron
 0 * * * * /bin/bash "$HOME/git-autosave/push-to-github.sh" >> "$HOME/git-autosave.log" 2>&1
 ```
-Don't forget to change "/path/to/push-to-github.sh" with your path.
