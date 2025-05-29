@@ -15,10 +15,10 @@ This script automatically commits and pushes changes from a local Git repository
 git clone https://github.com/Avonae/Scripts.git "$HOME/Scripts"
 ```
 
-Create `.env` file in the same directory as the script:
+Create `.env` file in the same directory as the script and add your repo folder to REPO_PATH variable:
 
-```env
-echo 'REPO_PATH="$HOME/Scripts/"' > ~/Scripts/.env
+```bash
+echo 'REPO_PATH="PUT_PARTH_TO_YOUR_REPO_HERE"' > ~/Scripts/.env
 ```
 
 Make the script executable:
