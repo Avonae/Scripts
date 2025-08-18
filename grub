@@ -1,0 +1,6 @@
+menuentry "Ubuntu Desktop ISO" {
+    set isofile="/boot/iso/ubuntu-desktop.iso"
+    loopback loop (hd0,gptX)$isofile
+    linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=$isofile noeject noprompt
+    initrd (loop)/casper/initrd
+}
