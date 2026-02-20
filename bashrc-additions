@@ -1,0 +1,26 @@
+#############################################
+# My custom bash configurations
+#############################################
+
+# Change time format to dd.mm.yyyy 
+export HISTTIMEFORMAT="%d/%m/%y %T "
+
+# Add bash aliases
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias vim='nvim'
+alias mcr="molecule create"
+alias mc="molecule converge"
+alias md="molecule destroy"
+alias mv="molecule verify"
+alias mt="molecule test"
+alias ml="molecule list"
+
+# Add neovim path to PATH variable
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+
+# Start tmux automatically if not already inside one
+if [ -n "$PS1" ] && [ -z "$TMUX" ]; then
+  tmux new-session -A -s main
+fi
+
