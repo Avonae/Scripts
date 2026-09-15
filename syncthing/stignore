@@ -1,0 +1,40 @@
+# Fetched to <folder root>/.stignore on every machine that syncs this folder.
+# Syncthing never syncs .stignore itself, so this repository is what keeps the
+# machines on one list. Edits made in the Syncthing web UI are overwritten on
+# the next fetch -- change them here instead.
+#
+# Patterns are relative to the folder root.
+#
+# ~/.claude holds two kinds of content. Portable configuration -- CLAUDE.md,
+# settings.json, agents/ -- is shared. Machine-local state is not: it carries
+# absolute paths, per-host caches and credentials, and syncing it breaks the
+# other machine. Everything below is the second kind.
+
+# Plugin cache and install records. installed_plugins.json stores absolute
+# install paths, so an entry written on one machine points nowhere on the
+# other, the plugin is marked orphaned and its skills silently stop loading.
+# Each machine installs its own copy from the enabledPlugins and
+# extraKnownMarketplaces declarations in settings.json, which is synced.
+Claude/.claude/plugins
+
+# Session transcripts and auto-memory, stored under path-derived directory
+# names that never match across machines.
+Claude/.claude/projects
+Claude/.claude/sessions
+Claude/.claude/session-env
+
+# Per-machine runtime state.
+Claude/.claude/shell-snapshots
+Claude/.claude/file-history
+Claude/.claude/backups
+Claude/.claude/ide
+Claude/.claude/.last-cleanup
+Claude/.claude/.caveman-*
+
+# OAuth token for the Claude account. Must stay on the machine that obtained
+# it; replicating it also copies it into .stversions, where neither logout nor
+# a token rotation reaches it.
+Claude/.claude/.credentials.json
+
+# macOS directory metadata, deletable when it alone blocks removing a folder.
+(?d)**/.DS_Store
