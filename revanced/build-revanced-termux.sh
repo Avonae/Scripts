@@ -15,6 +15,7 @@ SDK_DIR="$HOME/android-sdk"
 GRADLE_PROPS="$HOME/.gradle/gradle.properties"
 PROTO_GRADLE="extensions/shared/protobuf/build.gradle.kts"
 VERSIONS_TOML="gradle/libs.versions.toml"
+TWITTER_GRADLE="extensions/twitter/build.gradle.kts"
 JVM_XMX="${JVM_XMX:-2g}"
 
 log() { printf '\n\033[1;32m==> %s\033[0m\n' "$*"; }
@@ -52,7 +53,7 @@ pkg install -y git openjdk-17 aapt2 aidl protobuf
 if [ -d "$REPO_DIR/.git" ]; then
   log "Updating repository"
   # Revert our local patches first so the pull is clean; they are re-applied below
-  git -C "$REPO_DIR" checkout -- "$PROTO_GRADLE" "$VERSIONS_TOML" 2>/dev/null || true
+  git -C "$REPO_DIR" checkout -- "$PROTO_GRADLE" "$VERSIONS_TOML" "$TWITTER_GRADLE" 2>/dev/null || true
   git -C "$REPO_DIR" pull --ff-only origin "$REPO_BRANCH"
 else
   log "Cloning repository"
@@ -113,7 +114,14 @@ grep -q '^protoc = ' "$VERSIONS_TOML" || die "No 'protoc' key in $VERSIONS_TOML"
 sed -i "s|^protoc = \".*\"|protoc = \"$runtime_ver\"|" "$VERSIONS_TOML"
 echo "protoc $proto_ver -> protobuf-javalite $runtime_ver"
 
-# --- 7. Replace x86 build-tools binaries with Termux ones --------------------
+# --- 7. Twitter extension: readAllBytes needs API 33 -------------------------
+# Without it the build fails with "Call requires API level 33 (current min is 26)"
+if [ -f "$TWITTER_GRADLE" ] && grep -q 'minSdk = 26' "$TWITTER_GRADLE"; then
+  log "Raising minSdk to 33 in $TWITTER_GRADLE"
+  sed -i 's/minSdk = 26/minSdk = 33/' "$TWITTER_GRADLE"
+fi
+
+# --- 8. Replace x86 build-tools binaries with Termux ones --------------------
 # Returns 0 if something was replaced
 fix_build_tools() {
   local changed=1 bt tool
@@ -131,7 +139,7 @@ fix_build_tools() {
   return $changed
 }
 
-# --- 8. Build ----------------------------------------------------------------
+# --- 9. Build ----------------------------------------------------------------
 log "Building (first run downloads the SDK and takes a while)"
 fix_build_tools || true
 if ! ./gradlew build --no-daemon; then
@@ -144,7 +152,7 @@ if ! ./gradlew build --no-daemon; then
   fi
 fi
 
-# --- 9. Result ---------------------------------------------------------------
+# --- 10. Result ---------------------------------------------------------------
 rvp=$(ls -t patches/build/libs/*.rvp 2>/dev/null | head -n1 || true)
 [ -n "$rvp" ] || die "Build finished but no .rvp file was found."
 log "Done: $REPO_DIR/$rvp"

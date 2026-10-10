@@ -59,6 +59,7 @@ What it does:
 - Clones the `dev` branch to `~/revanced-patches`, or updates it on the next run.
 - Accepts the [Android SDK License](https://developer.android.com/studio/terms) by writing the license file to `~/android-sdk/licenses`.
 - Replaces the x86 `protoc`, `aidl` and `aapt2` binaries with the native Termux ones.
+- Raises `minSdk` from 26 to 33 in `extensions/twitter/build.gradle.kts`, same as the computer scripts.
 - Builds the patches.
 
 The result is `~/revanced-patches/patches/build/libs/patches-<version>.rvp`. If `termux-setup-storage` was run, the file is also copied to `Download`.
